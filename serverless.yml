@@ -1,23 +1,18 @@
-service: node-in-aws-web
+service: rs-school-shop-app
 
 frameworkVersion: '2'
 
 provider:
   name: aws
   runtime: nodejs12.x
-  # setup profile for AWS CLI.
-  # profile: node-aws
+  profile: elijah
 
 plugins:
   - serverless-finch
-  # 'serverless-single-page-app-plugin' is a custom plugin that located .serverless_plugins folder.
-  # Existing plugin (https://www.npmjs.com/package/serverless-single-page-app-plugin) doesn't have invalidate cache feature that often used during CI/CD events.
-  # How to build your own plugins: https://www.serverless.com/framework/docs/providers/aws/guide/plugins#service-local-plugin
   - serverless-single-page-app-plugin
-
 custom:
   client:
-    bucketName: node-in-aws-web-bucket
+    bucketName: rs-school-task-2-automated
     distributionFolder: build
   s3BucketName: ${self:custom.client.bucketName}
 

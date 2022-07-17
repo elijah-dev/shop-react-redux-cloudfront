@@ -6,13 +6,14 @@ provider:
   name: aws
   runtime: nodejs12.x
   profile: elijah
+  region: eu-central-1
 
 plugins:
   - serverless-finch
   - serverless-single-page-app-plugin
 custom:
   client:
-    bucketName: rs-school-task-2-automated
+    bucketName: aws-practitioner-course-frontend-app
     distributionFolder: build
   s3BucketName: ${self:custom.client.bucketName}
 
@@ -30,6 +31,12 @@ resources:
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
+        PublicAccessBlockConfiguration:
+            BlockPublicAcls: true
+            BlockPublicPolicy: true
+            IgnorePublicAcls: true
+            RestrictPublicBuckets: true
+
         # VersioningConfiguration:
         #   Status: Enabled
 
@@ -64,7 +71,7 @@ resources:
       Properties:
         DistributionConfig:
           Origins:
-            - DomainName: ${self:custom.s3BucketName}.s3.amazonaws.com
+            - DomainName: !GetAtt WebAppS3Bucket.RegionalDomainName
               ## An identifier for the origin which must be unique within the distribution
               Id: myS3Origin
               ## In case you don't want to restrict the bucket access use CustomOriginConfig and remove S3OriginConfig

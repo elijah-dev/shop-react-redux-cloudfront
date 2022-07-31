@@ -14,12 +14,14 @@ import API_PATHS from "constants/apiPaths";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: "100%",
+    height: "400px",
     display: "flex",
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    height: "60%",
+    width: "100%",
+    objectFit: "cover",
   },
   cardContent: {
     flexGrow: 1,
@@ -45,16 +47,16 @@ export default function Products() {
       {products.map((product: Product, index: number) => (
         <Grid item key={product.id} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
-            <CardMedia
+            <img
               className={classes.cardMedia}
-              image={`https://source.unsplash.com/random?sig=${index}`}
-              title="Image title"
+              src={product.image}
+              alt={product.title}
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
                 {product.title}
               </Typography>
-              <Typography>{formatAsPrice(product.price)}</Typography>
+              <Typography>{formatAsPrice(product.cost)}</Typography>
             </CardContent>
             <CardActions>
               <AddProductToCart product={product} />
